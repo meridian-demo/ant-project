@@ -1,0 +1,17 @@
+<project name="ant-project" default="build" basedir=".">
+    <property name="src" location="src"/>
+    <property name="build" location="build"/>
+
+    <target name="clean">
+        <delete dir="${build}"/>
+    </target>
+
+    <target name="build">
+        <mkdir dir="${build}"/>
+        <javac srcdir="${src}" destdir="${build}" includeantruntime="false"/>
+    </target>
+
+    <target name="run" depends="build">
+        <java classname="Hello" classpath="${build}"/>
+    </target>
+</project>
