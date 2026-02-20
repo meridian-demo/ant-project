@@ -19,9 +19,16 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Install Ant 1.9.16
-        run: |
-          curl -sL https://archive.apache.org/dist/ant/binaries/apache-ant-1.9.16-bin.tar.gz | tar xz -C /tmp
+      - name: Install Ant
+        run: sudo apt-get update && sudo apt-get install -y ant
 
       - name: Build with Ant
-        run: /tmp/apache-ant-1.9.16/bin/ant build
+        run: ant build
+
+      - name: Build Docker image
+        run: docker build -t meridian/ant-project:${{ github.sha }} .
+
+      - name: Snyk test
+        run: snyk test --all-projects || true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
