@@ -24,6 +24,13 @@ jobs:
           curl -sL https://archive.apache.org/dist/ant/binaries/apache-ant-1.9.16-bin.tar.gz | tar xz -C /tmp
           echo "/tmp/apache-ant-1.9.16/bin" >> $GITHUB_PATH
 
+      - name: Debug PATH before ant
+        run: |
+          echo "PATH=$PATH"
+          echo "JAVA_HOME=$JAVA_HOME"
+          which ant
+          ant -version
+
       - name: Build with Ant
         run: ant build
 
